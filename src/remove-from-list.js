@@ -23,23 +23,20 @@ const { ListNode } = require('../extensions/list-node.js');
  * }
  */
 
-
-
-findNextValidNode = (l, k) => {
-  if (!l.next) return null;
-  if (l.next.value === k) {
-    return findNextValidNode(l.next, k)
-  } else {
-    return l.next;
-  }
-}
-
-
 function removeKFromList(l, k) {
-  if (l.value === k) {
-    return findNextValidNode(l, k);
-  } else {
-    l.next = removeKFromList(l.next, k);
+
+  while(l.value === k) {
+    l = l.next;
+  }
+  let curNode = l.next;
+  if (curNode) {
+    while (curNode.next) {
+      if(curNode.next.value === k) {
+        curNode.next=curNode.next.next;
+      } else {
+        curNode = curNode.next;
+      }
+    }
   }
   return l;
 }
